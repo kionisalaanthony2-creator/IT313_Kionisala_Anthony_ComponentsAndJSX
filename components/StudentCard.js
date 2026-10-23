@@ -1,8 +1,11 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Button, StyleSheet } from "react-native";
 
 // Props are destructured right in the function signature
 export default function StudentCard({ name, course, units, isFullLoad }) {
+  // Local state for each card
+  const [present, setPresent] = useState(false);
+
   return (
     <View style={styles.card}>
       <Text style={styles.name}>{name}</Text>
@@ -11,6 +14,10 @@ export default function StudentCard({ name, course, units, isFullLoad }) {
 
       {/* Conditional rendering: only shown when isFullLoad is true */}
       {isFullLoad && <Text style={styles.badge}>Full Load</Text>}
+
+      {/* Button and label that depend on the card's own state */}
+      <Button title="Mark present" onPress={() => setPresent(true)} />
+      {present && <Text style={styles.present}>✔ Present</Text>}
     </View>
   );
 }
@@ -34,4 +41,5 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     overflow: "hidden",
   },
+  present: { marginTop: 6, color: "#2e7d32", fontWeight: "bold" },
 });
